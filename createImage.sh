@@ -44,6 +44,11 @@ docker build \
 --force-rm \
 --no-cache .
 
+if [[ "${IMAGE_SOURCE}" == "dockerHub" ]];
+  then
+    docker image rm "${BASE_IMAGE_NAME}":"${BASE_IMAGE_TAG}";
+fi
+
 if [[ "${IMAGE_SOURCE}" == "container" ]];
   then
     docker image rm "tmp-image-from-container";
