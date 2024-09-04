@@ -17,17 +17,17 @@ ENV BUILD_CMD=${NPM_BUILD_CMD} \
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 # Сначала NPM ci, чтобы НЕ аннулировать предыдущие шаги, за исключением случаев изменения package.json.
-#RUN mkdir -p /app/superset-frontend
+RUN mkdir -p /app/superset-frontend
 
 # Устанавливаем рабочую директорию
-#WORKDIR /app/superset-frontend/
+WORKDIR /app/superset-frontend/
 
 # Копируем в образ файлы package*.json
-#COPY superset_3_0_0/superset-frontend/package*.json ./
+#COPY superset/superset-frontend/package*.json ./
 #RUN npm ci
 
 # Копируем всю директорию superset-frontend для пересборки
-#COPY superset_3_0_0/superset-frontend .
+#COPY superset/superset-frontend .
 
 # Тяжеловесный шаг - билдим и удаляем node_modules
 #RUN npm run ${BUILD_CMD} \
@@ -47,10 +47,10 @@ FROM superset-official AS superset-bi
 ######################################################################
 USER root
 
-#COPY superset_3_0_0/requirements/requirements-local.txt /app/requirements/
+COPY superset/requirements/requirements-local.txt /app/requirements/
 
 # Кэшируем все для процесса разработки...
-#RUN cd /app \
-#    && pip install --no-cache -r requirements/requirements-local.txt
+RUN cd /app \
+    && pip install --no-cache -r requirements/requirements-local.txt
 
 USER superset
